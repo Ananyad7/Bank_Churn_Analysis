@@ -1,0 +1,405 @@
+create database bank_churn;
+use bank_churn;
+
+create table bankcustomers_info(
+    RowNumber text,
+    CustomerId text,
+    Surname varchar(255),
+    CreditScore text,
+    Geography VARCHAR(255),
+    Gender VARCHAR(10),
+    Age text,
+    Tenure text,
+    Balance DECIMAL(10, 2),
+    NumOfProducts text,
+    HasCrCard binary,
+    IsActiveMember binary,
+    EstimatedSalary DECIMAL(10, 2),
+    Exited binary
+);
+
+LOAD DATA LOCAL INFILE 'D:\\SQL\\Bank_churn\\Churn_Modelling.csv' INTO TABLE bankcustomers_info FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\r\n' IGNORE 1 ROWS;
+
+select * from bankcustomers_info;
+describe bankcustomers_info;
+
+# duplicate search
+select customerid , count(*) as duplicatecount
+from bankcustomers_info
+group by CustomerId
+having duplicatecount >1 ; # no duplicacy found
+
+
+# total customers
+select count(*) as totalcount from bankcustomers_info;
+
+
+# declare a variable to store total number of customers
+select count(*) into @total_customer
+from bankcustomers_info;
+
+select  @total_customer;
+
+# credit score
+select max(creditscore) as maxscore , min(creditscore) as minscore, round(avg(creditscore),0) as avgscore
+from bankcustomers_info;
+
+# Age
+select max(age) as maxscore , min(age) as minscore, round(avg(age),0) as avgscore
+from bankcustomers_info;
+
+# geography
+select distinct(geography) as location
+from bankcustomers_info;
+
+# Gender 
+select distinct(gender) as gender
+from bankcustomers_info;
+
+# tenure
+select max(tenure) as tenure, min(tenure) as tenure, round(avg(tenure),0) as tenure
+from bankcustomers_info;
+
+
+# Churn Vs Retention rate
+CREATE TABLE churnrate_table AS SELECT 'churn_rate' AS rate_type,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / @total_customer),
+            1) AS rate FROM
+    bankcustomers_info 
+UNION ALL SELECT 
+    'retention_rate' AS rate_type,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / @total_customer),
+            1) AS rate
+FROM
+    bankcustomers_info;
+
+
+
+
+
+#Churn Vs Retention Rate for each location 
+
+CREATE TABLE geo_table AS SELECT geography,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customers FROM
+    bankcustomers_info
+GROUP BY geography;
+
+#Churn Vs Retention Rate for each location
+CREATE TABLE geo1_table AS SELECT geography,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY geography;
+
+
+
+
+
+# churn Vs retention rate between male and female 
+
+CREATE TABLE gender_table AS SELECT gender,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer FROM
+    bankcustomers_info
+GROUP BY gender;
+
+
+CREATE TABLE gender1_table AS SELECT gender,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY gender;
+
+
+
+#  churn Vs retention rate age 
+
+CREATE TABLE age_table AS SELECT CASE
+        WHEN Age < 30 THEN 'Under 30'
+        WHEN Age >= 30 AND Age < 40 THEN '30-39'
+        WHEN Age >= 40 AND Age < 50 THEN '40-49'
+        ELSE '50+'
+    END AS AgeGroup,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customers FROM
+    bankcustomers_info
+GROUP BY AgeGroup;
+
+
+#  churn Vs retention rate age 
+
+CREATE TABLE age1_table AS SELECT CASE
+        WHEN Age < 30 THEN 'Under 30'
+        WHEN Age >= 30 AND Age < 40 THEN '30-39'
+        WHEN Age >= 40 AND Age < 50 THEN '40-49'
+        ELSE '50+'
+    END AS AgeGroup,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_churn FROM
+    bankcustomers_info
+GROUP BY AgeGroup;
+
+
+
+# Total customers, credit scores 
+
+CREATE TABLE ccscore_table AS SELECT CASE
+        WHEN CreditScore >= 300 AND CreditScore < 500 THEN 'Poor (300-499)'
+        WHEN CreditScore >= 500 AND CreditScore < 600 THEN 'Fair (500-599)'
+        WHEN CreditScore >= 600 AND CreditScore < 700 THEN 'Good (600-699)'
+        WHEN CreditScore >= 700 AND CreditScore < 800 THEN 'Very Good (700-799)'
+        ELSE 'Excellent (800+)'
+    END AS credit_score_group,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customers FROM
+    bankcustomers_info
+GROUP BY credit_score_group
+ORDER BY MIN(CreditScore);
+
+
+
+# churn Vs retention rate, credit scores
+
+CREATE TABLE ccscore1_table AS SELECT CASE
+        WHEN CreditScore >= 300 AND CreditScore < 500 THEN 'Poor (300-499)'
+        WHEN CreditScore >= 500 AND CreditScore < 600 THEN 'Fair (500-599)'
+        WHEN CreditScore >= 600 AND CreditScore < 700 THEN 'Good (600-699)'
+        WHEN CreditScore >= 700 AND CreditScore < 800 THEN 'Very Good (700-799)'
+        ELSE 'Excellent (800+)'
+    END AS credit_score_group,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY credit_score_group
+ORDER BY MIN(CreditScore);
+
+
+
+
+# churn Vs retention rate, average account balance 
+
+CREATE TABLE avg_balance AS SELECT CASE
+        WHEN Exited = 1 THEN 'Churned'
+        ELSE 'Not Churned'
+    END AS churn_status,
+    ROUND(AVG(Balance), 1) AS avg_account_balance FROM
+    bankcustomers_info
+GROUP BY churn_status;
+
+
+
+
+
+
+
+#Tenure bin , Total customers
+
+CREATE TABLE tenure_table AS SELECT CASE
+        WHEN Tenure < 1 THEN 'Less than 1 year'
+        WHEN Tenure >= 1 AND Tenure < 2 THEN '1-2 years'
+        WHEN Tenure >= 2 AND Tenure < 5 THEN '2-5 years'
+        WHEN Tenure >= 5 AND Tenure < 10 THEN '5-10 years'
+        ELSE 'More than 10 years'
+    END AS tenure_group,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer FROM
+    bankcustomers_info
+GROUP BY tenure_group;
+
+
+#relationship between customer tenure and churn status
+
+CREATE TABLE tenure1_table AS SELECT CASE
+        WHEN Tenure < 1 THEN 'Less than 1 year'
+        WHEN Tenure >= 1 AND Tenure < 2 THEN '1-2 years'
+        WHEN Tenure >= 2 AND Tenure < 5 THEN '2-5 years'
+        WHEN Tenure >= 5 AND Tenure < 10 THEN '5-10 years'
+        ELSE 'More than 10 years'
+    END AS tenure_group,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY tenure_group;
+
+
+# products, Total Customers
+
+CREATE TABLE product_table AS SELECT NumOfProducts,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer FROM
+    bankcustomers_info
+GROUP BY NumOfProducts
+ORDER BY NumOfProducts;
+
+
+# churn Vs retention rate, products 
+
+CREATE TABLE product1_table AS SELECT NumOfProducts,
+    COUNT(*) AS total_customers,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retentionrate FROM
+    bankcustomers_info
+GROUP BY NumOfProducts
+ORDER BY NumOfProducts;
+
+
+
+# credit card holder , total customers
+
+CREATE TABLE creditcard_table AS SELECT CASE
+        WHEN HasCrCard = 1 THEN 'Has Credit Card'
+        ELSE 'No Credit Card'
+    END AS credit_card_status,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer FROM
+    bankcustomers_info
+GROUP BY credit_card_status;
+
+
+
+# churn Vs retention rate, credit card holder
+
+CREATE TABLE creditcard1_table AS SELECT CASE
+        WHEN HasCrCard = 1 THEN 'Has Credit Card'
+        ELSE 'No Credit Card'
+    END AS credit_card_status,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY credit_card_status;
+
+
+
+# active members, Total Customers
+
+CREATE TABLE active_table AS SELECT CASE
+        WHEN IsActiveMember = 1 THEN 'Active Member'
+        WHEN IsActiveMember = 0 THEN 'Inactive Member'
+        ELSE 'Unknown'
+    END AS membership_status,
+    ROUND(COUNT(*) * 100 / @total_customer, 1) AS total_customer FROM
+    bankcustomers_info
+GROUP BY membership_status
+ORDER BY membership_status;
+
+
+# churn Vs retention rate, active members
+
+CREATE TABLE active1_table AS SELECT CASE
+        WHEN IsActiveMember = 1 THEN 'Active Member'
+        WHEN IsActiveMember = 0 THEN 'Inactive Member'
+        ELSE 'Unknown'
+    END AS membership_status,
+    ROUND((SUM(CASE
+                WHEN Exited = 1 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS churn_rate,
+    ROUND((SUM(CASE
+                WHEN Exited = 0 THEN 1
+                ELSE 0
+            END) * 100.0 / COUNT(*)),
+            1) AS retention_rate FROM
+    bankcustomers_info
+GROUP BY membership_status
+ORDER BY membership_status;
+
+
+
+
+# Salary brackets , Total customers
+
+CREATE TABLE salary_table AS
+SELECT 
+    CASE 
+        WHEN EstimatedSalary < 30000 THEN 'Low (< 30k)'
+        WHEN EstimatedSalary >= 30000 AND EstimatedSalary < 60000 THEN 'Lower-Middle (30k-60k)'
+        WHEN EstimatedSalary >= 60000 AND EstimatedSalary < 90000 THEN 'Middle (60k-90k)'
+        WHEN EstimatedSalary >= 90000 AND EstimatedSalary < 120000 THEN 'Upper-Middle (90k-120k)'
+        ELSE 'High (120k+)' 
+    END AS salary_bracket,round(count(*)*100/@total_customer,1) as total_customer
+	FROM bankcustomers_info
+GROUP BY salary_bracket
+ORDER BY MIN(EstimatedSalary);
+
+
+
+
+
+# churn Vs retention rate 
+
+CREATE TABLE salary1_table AS
+SELECT 
+    CASE 
+        WHEN EstimatedSalary < 30000 THEN 'Low (< 30k)'
+        WHEN EstimatedSalary >= 30000 AND EstimatedSalary < 60000 THEN 'Lower-Middle (30k-60k)'
+        WHEN EstimatedSalary >= 60000 AND EstimatedSalary < 90000 THEN 'Middle (60k-90k)'
+        WHEN EstimatedSalary >= 90000 AND EstimatedSalary < 120000 THEN 'Upper-Middle (90k-120k)'
+        ELSE 'High (120k+)' 
+    END AS salary_bracket,
+	 round((sum(CASE WHEN Exited = 1 THEN 1 ELSE 0 END) * 100.0 /count(*)),1) AS churn_rate,
+    round((sum(CASE WHEN Exited = 0 THEN 1 ELSE 0 END) * 100.0 /count(*)),1) AS retention_rate
+    
+FROM bankcustomers_info
+GROUP BY salary_bracket
+ORDER BY MIN(EstimatedSalary);
+
+
+
