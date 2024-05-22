@@ -19,20 +19,33 @@ By tackling churn, banks can plug the leak and strengthen their financial health
 Tool used : SQL , Power BI
 
 # About the dataset
-RowNumber: Each row's unique sequential identifier.
-CustomerId: A number that uniquely identifies each customer (10000).
-Surname: The last name of each customer.
-CreditScore: A score that reflects how financially reliable a customer is.(max:850, min:350)
-Geography: Where each customer lives.(France, Spain, and Germany)
-Gender: Whether the customer is male or female.
-Age: How old each customer is.
-Tenure: How long each customer has been with the bank (in years).
-Balance: How much money each customer has in their account.
-NumOfProducts: How many different bank products each customer uses.
-HasCrCard: Whether each customer has a credit card (0 or 1).
-IsActiveMember: Whether each customer is currently active (0 or 1).
-EstimatedSalary: An estimate of each customer's annual salary.
-Exited: Whether each customer has left the bank (0 or 1).
+~ RowNumber: Each row's unique sequential identifier.
+
+~ CustomerId: A number that uniquely identifies each customer (10000).
+
+~ Surname: The last name of each customer.
+
+~ CreditScore: A score that reflects how financially reliable a customer is.(max:850, min:350)
+
+~ Geography: Where each customer lives.(France, Spain, and Germany)
+
+~ Gender: Whether the customer is male or female.
+
+~ Age: How old each customer is.
+
+~ Tenure: How long each customer has been with the bank (in years).
+
+~ Balance: How much money each customer has in their account.
+
+~ NumOfProducts: How many different bank products each customer uses.
+
+~ HasCrCard: Whether each customer has a credit card (0 or 1).
+
+~ IsActiveMember: Whether each customer is currently active (0 or 1).
+
+~ EstimatedSalary: An estimate of each customer's annual salary.
+
+~ Exited: Whether each customer has left the bank (0 or 1).
 
 # Objective
 In this report, we delve into the phenomenon of customer churn within banking institutions. Customer churn, or the rate at which customers leave a service or product, is a critical metric for banks to monitor and understand. By analyzing factors influencing churn, banks can develop strategies to retain customers and enhance customer satisfaction.
