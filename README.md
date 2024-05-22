@@ -1,6 +1,9 @@
 # Bank_Churn_Analysis
 
 # Understanding Bank Customer Churn: Why Retention is Key
+
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/ed2cdf31-c5fb-4851-9134-f7d2d80eb797" width="2550" height="750">
+
 Bank customer churn refers to the phenomenon where customers cease their relationship with a bank. This can manifest in several ways, such as:
 Closing accounts entirely
 Transferring funds to another institution
