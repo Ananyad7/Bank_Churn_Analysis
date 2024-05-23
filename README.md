@@ -52,7 +52,7 @@ In this report, we delve into the phenomenon of customer churn within banking in
 The primary objective of this report is to explore the dataset containing information about bank customers and their churn status. Through SQL analysis, we aim to identify key factors that contribute to customer churn and provide insights for mitigating churn rates.
 
 
-# TUnderstanding Customer Churn Patterns in Banking Institutions
+# Understanding Customer Churn Patterns in Banking Institutions
 
 # Dataset Snapshot
 
@@ -74,19 +74,19 @@ The data reveals distinct customer dynamics across France, Spain, and Germany. F
 
 
 # Churn vs. Retention Rate: Gender
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/0279c824-7fb9-4155-9824-5f80a0274812" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/0ed320df-5b1f-4b7d-9001-4fe5e2b07387" width="850" height="300">
 
 The customer distribution shows a slight skew towards males, comprising 54.6% of the total customer base, compared to 45.4% females. Notably, the churn rate is higher among female customers at 25.1%, while it stands at 16.5% for males. Consequently, male customers exhibit a higher retention rate of 83.5%, compared to 74.9% for females. This suggests that male customers are more likely to stay with the bank.
 
 
 # Churn vs. Retention Rate: Age
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/41b51cc7-3732-44ae-b4e5-c138558998e1" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/708eeeec-07e8-42e8-ba30-5b905fb4cda3" width="850" height="400">
 
 The customer base is skewed towards the 30-39 age group, which constitutes 43.5% of total customers and exhibits a low churn rate of 10.9%. The under 30 age group, accounting for 16.4% of customers, has the lowest churn rate at 7.6%, indicating high loyalty. Conversely, the 40-49 age group, comprising 26.2% of customers, has a significantly higher churn rate of 30.8%. The 50+ age group, representing 14.0% of the customer base, experiences the highest churn rate at 45.4%. 
 
 
 # Churn vs. Retention Rate: Credit Score
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/fa923325-2de7-40ea-bf04-1e4d115678ee" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/da21b29c-a53f-492e-a33a-ad92bc9b1136" width="850" height="300">
 
 The customer base is skewed towards the Good (600-699) credit score group, which represents 38.2% of customers. Churn rates are relatively similar across groups, with the Excellent (800+) group having the lowest churn rate at 19.5%, and the Poor (300-499) group the highest at 23.7%. However, all groups maintain retention rates above 76%, with the Excellent group slightly leading at 80.5%. These findings suggest a stable customer base with minimal variance in churn rates across different credit score groups, indicating consistent satisfaction levels across credit score segments.
 
@@ -107,7 +107,7 @@ The data indicates that newer customers have higher churn rates, with 23.0% for 
 
 # Churn vs. Retention Rate: Products
 
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/ece4d880-46a7-44a3-9fde-d8b7409c39f5" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/609e2839-c642-44b4-9cab-f3df861f1e16" width="750" height="300">
 
 The data reveals clear trends in customer churn based on the number of products held. Customers with a single product show a high churn rate of 27.7%, indicating lower engagement. Conversely, those with two products have a significantly lower churn rate at 7.6%, suggesting greater satisfaction. However, churn rates soar for customers holding three or four products, reaching 82.7% and 100% respectively, pointing to potential dissatisfaction from overextension or complex product structures.
 
@@ -115,7 +115,7 @@ The data reveals clear trends in customer churn based on the number of products 
 
 # Churn vs. Retention Rate: Credit Card
 
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/c4e21859-0296-4389-a9db-1df109642454" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/d29910a5-4922-4f03-ad17-3509ba7cf05b" width="850" height="300">
 
 
 The data reveals that both customers with and without credit cards exhibit similar churn rates around 20%, with a slightly higher churn rate among those without credit cards (20.8%) compared to those with credit cards (20.2%). This suggests that credit card status alone may not significantly influence churn behavior. 
@@ -124,7 +124,7 @@ The data reveals that both customers with and without credit cards exhibit simil
 
 # Churn vs. Retention Rate: Active members
 
-<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/ebdf955f-a856-4388-b59f-df0cb282abc8" width="850" height="300">
+<img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/466123b0-0941-4e42-b929-52405dc96c77" width="850" height="300">
 
 
 The data shows significant differences in churn rates based on membership status within the bank. Active members, comprising 51.5% of customers, exhibit a lower churn rate of 14.3%, indicating higher satisfaction and engagement. In contrast, inactive members, making up 48.5% of the customer base, have a higher churn rate of 26.9%, suggesting lower engagement and potential dissatisfaction.
