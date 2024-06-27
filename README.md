@@ -1,6 +1,7 @@
 # Understanding Bank Customer Churn: Why Retention is Key
 
 
+# Tool used : SQL , Power BI
 <img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/ed2cdf31-c5fb-4851-9134-f7d2d80eb797" width="2550" height="650">
 
 Bank customer churn refers to the phenomenon where customers cease their relationship with a bank. This can manifest in several ways, such as:
@@ -15,7 +16,6 @@ Damaged Reputation: A revolving door of customers suggests underlying issues. Ad
 
 By tackling churn, banks can plug the leak and strengthen their financial health.
 
-Tool used : SQL , Power BI
 
 # About the dataset
 ~ RowNumber: Each row's unique sequential identifier.
