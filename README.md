@@ -1,6 +1,5 @@
-# Bank_Churn_Analysis
-
 # Understanding Bank Customer Churn: Why Retention is Key
+
 
 <img src= "https://github.com/Ananyad7/Bank_Churn_Analysis/assets/164981636/ed2cdf31-c5fb-4851-9134-f7d2d80eb797" width="2550" height="650">
 
@@ -157,6 +156,6 @@ Implement activity monitoring to identify signs of inactivity early and interven
 By implementing these recommendations, the bank can address the specific factors contributing to customer churn and work towards improving overall customer retention.
 
 
-
+Linkedin Link: <a href="https://app.powerbi.com/view?r=eyJrIjoiMDM1NmFhMTAtOWJiMC00ZWUyLTkyMWItYWVmNjNlMDFjOTU5IiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9" target="_blank">Link</a>
 
 
